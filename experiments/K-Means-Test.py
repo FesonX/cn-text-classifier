@@ -9,13 +9,14 @@ from tools.preprocess import *
 from tools.visualizer import plot_result
 from sklearn.feature_extraction.text import TfidfTransformer, TfidfVectorizer
 from tools.labelText import LabelText
+import settings
 
 
 numOfClass: int = 5
 clf = KMeans(n_clusters=numOfClass, max_iter=10000, init="k-means++", tol=1e-6)
 
 sentences = []
-content_lines = loading_source("/media/feson/DATA/data/source.csv")
+content_lines = loading_source(settings.SOURCE_DATA + 'source.csv')
 cut_source(content_lines, sentences)
 
 # 词频矩阵 Frequency Matrix Of Words
