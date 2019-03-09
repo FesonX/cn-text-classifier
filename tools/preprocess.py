@@ -3,7 +3,7 @@ import jieba
 import pandas as pd
 import settings
 import random
-from sklearn.feature_extraction.text import TfidfTransformer, TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer, TfidfVectorizer, CountVectorizer
 from sklearn.decomposition import PCA
 
 
@@ -12,8 +12,9 @@ from sklearn.decomposition import PCA
 #############
 
 def loading_source(file_name: str):
+    print("Loading File...")
     source = ''.join([settings.BASE_PATH, file_name])
-    source_df = pd.read_csv(source, sep=',', encoding='utf-8')
+    source_df = pd.read_csv(file_name, sep=',', encoding='utf-8')
     source_df.dropna(inplace=True)
     return source_df.content.values.tolist()
 
@@ -27,7 +28,8 @@ def cut_source(content_lines, sentences, drop_digit=False, drop_single_char=Fals
     :param drop_single_char: default False
     :return:None
     """
-    stop_words_path = ''.join([settings.BASE_PATH, 'stop_words.txt'])
+    print("Cutting source...")
+    stop_words_path = ''.join([settings.STATIC_DIR, 'stop_words.txt'])
     stop_words = pd.read_csv(stop_words_path, index_col=False, quoting=3, sep='\t', names=['stopword'], encoding='utf-8')
     stop_words = stop_words['stopword'].values
     for line in content_lines:
@@ -45,7 +47,7 @@ def cut_source(content_lines, sentences, drop_digit=False, drop_single_char=Fals
             # drop stop words
             segs = list(filter(lambda x: x not in stop_words, segs))
             sentences.append(' '.join(segs))
-            random.shuffle(sentences)
+            # random.shuffle(sentences)
         except Exception as e:
             print(e)
             print(line)
@@ -59,8 +61,10 @@ def extract_characters(sentences: list, dimension: int):
     :param dimension: int
     :return: weight, training_data
     """
+    print("Vetorizier...")
     # Transfer into frequency matrix a[i][j], word j in text class i frequency
-    vertorizer = TfidfVectorizer(sublinear_tf=True, max_df=0.5)
+    vertorizer = TfidfVectorizer(sublinear_tf=True, max_df=0.46)
+    # vertorizer = CountVectorizer()
     # collect tf-idf weight
     transformer = TfidfTransformer()
     # outer transform for calculate tf-idf, second for transform into matrix

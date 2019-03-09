@@ -5,6 +5,8 @@
 """
 import os
 import numpy as np
+import settings
+from tools.preprocess import loading_source
 
 
 class LabelText(object):
@@ -16,50 +18,75 @@ class LabelText(object):
         """
         label+text 未排序
         """
-        abs_path = os.path.abspath(self.ori_path)
         if write is True:
-            write_path = '/'.join(abs_path.split('/')[:-1]) + '/labelText.csv'
-            print ("new file saved in " + write_path)
+            write_path = settings.DST_DATA + 'labelText.csv'
+            print("new file saved in " + write_path)
             w = open(write_path, 'w')
-        with open(self.ori_path, 'r') as o:
-            for l, s in zip(self.label_list, o.readlines()):
-                try:
-                    line = str(l) + "\t" + str(s.strip())
-                    if show is True:
-                        print(line)
-                    if write is True:
-                        w.write(line)
-                        w.write('\n')
-                except Exception as e:
-                    print(e)
-                    continue
-            if write is True:
-                w.close()
+        # with open(self.ori_path, 'r') as o:
+        #     for l, s in zip(self.label_list, o.readlines()):
+        #         try:
+        #             line = str(l) + "\t" + str(s.strip())
+        #             if show is True:
+        #                 print(line)
+        #             if write is True:
+        #                 w.write(line)
+        #                 w.write('\n')
+        #         except Exception as e:
+        #             print(e)
+        #             continue
+        #     if write is True:
+        #         w.close()
+        content_lines = loading_source(self.ori_path)
+        for label, content in zip(self.label_list, content_lines):
+            try:
+                line = str(label) + '\t' + content.strip()
+                if show is True:
+                    print(line)
+                if write is True:
+                    w.write(line)
+                    w.write('\n')
+            except Exception as e:
+                print(e)
+                continue
+        if write is True:
+            w.close()
 
     def sortByLabel(self, show=True, write=False):
         """
         label+text 排序
         """
-        abs_path = os.path.abspath(self.ori_path)
         if write is True:
-            write_path = '/'.join(abs_path.split('/')[:-1]) + '/sortedLabelText.csv'
+            write_path = settings.DST_DATA + 'sortedLabelText.csv'
             print("new file saved in " + write_path)
             w = open(write_path, 'w')
-        with open(self.ori_path, 'r') as o:
-            index = np.argsort(self.label_list)
-            ori_lines = o.readlines()
-            # print "len ori " + str(len(ori_lines))
-            for i in range(len(index)):
-                try:
-                    line = str(self.label_list[index[i]]) + '\t' + str(ori_lines[index[i]].strip())
-                    # line = str(self.label_list[index[i]]) + '\t'
-                    if show is True:
-                        print(line)
-                    if write is True:
-                        w.write(line)
-                        w.write('\n')
-                except Exception as e:
-                    print(e)
-                    continue
-            if write is True:
-                w.close()
+        # with open(self.ori_path, 'r') as o:
+        #     index = np.argsort(self.label_list)
+        #     ori_lines = o.readlines()
+        #     # print "len ori " + str(len(ori_lines))
+        #     for i in range(len(index)):
+        #         try:
+        #             line = str(self.label_list[index[i]]) + '\t' + str(ori_lines[index[i]].strip())
+        #             # line = str(self.label_list[index[i]]) + '\t'
+        #             if show is True:
+        #                 print(line)
+        #             if write is True:
+        #                 w.write(line)
+        #                 w.write('\n')
+        #         except Exception as e:
+        #             print(e)
+        #             continue
+        content_lines = loading_source(self.ori_path)
+        index = np.argsort(self.label_list)
+        for i in range(len(index)):
+            try:
+                line = str(self.label_list[index[i]]) + '\t' + content_lines[index[i]].strip()
+                if show is True:
+                    print(line)
+                if write:
+                    w.write(line)
+                    w.write('\n')
+            except Exception as e:
+                print(e)
+                continue
+        if write is True:
+            w.close()
