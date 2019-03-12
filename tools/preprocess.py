@@ -29,7 +29,7 @@ def cut_source(content_lines, sentences, drop_digit=False, drop_single_char=Fals
     :return:None
     """
     print("Cutting source...")
-    stop_words_path = ''.join([settings.STATIC_DIR, 'stop_words.txt'])
+    stop_words_path = ''.join([settings.STATIC_DIR, 'stopwords.txt'])
     stop_words = pd.read_csv(stop_words_path, index_col=False, quoting=3, sep='\t', names=['stopword'], encoding='utf-8')
     stop_words = stop_words['stopword'].values
     for line in content_lines:

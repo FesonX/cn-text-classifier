@@ -3,10 +3,10 @@
 将结果展示成label + text 的形式，易于观察，
 并且提供输出到文档的功能
 """
-import os
 import numpy as np
 import settings
 from tools.preprocess import loading_source
+import time
 
 
 class LabelText(object):
@@ -22,20 +22,6 @@ class LabelText(object):
             write_path = settings.DST_DATA + 'labelText.csv'
             print("new file saved in " + write_path)
             w = open(write_path, 'w')
-        # with open(self.ori_path, 'r') as o:
-        #     for l, s in zip(self.label_list, o.readlines()):
-        #         try:
-        #             line = str(l) + "\t" + str(s.strip())
-        #             if show is True:
-        #                 print(line)
-        #             if write is True:
-        #                 w.write(line)
-        #                 w.write('\n')
-        #         except Exception as e:
-        #             print(e)
-        #             continue
-        #     if write is True:
-        #         w.close()
         content_lines = loading_source(self.ori_path)
         for label, content in zip(self.label_list, content_lines):
             try:
@@ -51,30 +37,14 @@ class LabelText(object):
         if write is True:
             w.close()
 
-    def sortByLabel(self, show=True, write=False):
+    def sortByLabel(self, show=True, write=False, algorithm="km"):
         """
         label+text 排序
         """
         if write is True:
-            write_path = settings.DST_DATA + 'sortedLabelText.csv'
+            write_path = settings.DST_DATA + algorithm + str(time.time()) + '-sortedLabelText.csv'
             print("new file saved in " + write_path)
             w = open(write_path, 'w')
-        # with open(self.ori_path, 'r') as o:
-        #     index = np.argsort(self.label_list)
-        #     ori_lines = o.readlines()
-        #     # print "len ori " + str(len(ori_lines))
-        #     for i in range(len(index)):
-        #         try:
-        #             line = str(self.label_list[index[i]]) + '\t' + str(ori_lines[index[i]].strip())
-        #             # line = str(self.label_list[index[i]]) + '\t'
-        #             if show is True:
-        #                 print(line)
-        #             if write is True:
-        #                 w.write(line)
-        #                 w.write('\n')
-        #         except Exception as e:
-        #             print(e)
-        #             continue
         content_lines = loading_source(self.ori_path)
         index = np.argsort(self.label_list)
         for i in range(len(index)):
