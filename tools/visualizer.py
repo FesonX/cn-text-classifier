@@ -21,23 +21,12 @@ def plot_cluster(result, trainingData, numOfClass):
             except Exception as e:
                 print(e)
         plt.plot(x1, y1, color[i])
-
-    # draw central point
-    # x1 = []
-    # y1 = []
-    # for point in clf.cluster_centers_:
-    #     try:
-    #         x1.append(point[0])
-    #         y1.append(point[1])
-    #     except Exception:
-    #         pass
-    # plt.plot(x1, y1, 'rv')
     plt.show()
 
 
 def plot_result(data, cluster_res, cluster_num):
     nPoints = len(data)
-    scatter_colors = [ 'blue', 'green', 'yellow', 'red', 'purple', 'orange', 'brown']
+    scatter_colors = ['blue', 'green', 'yellow', 'red', 'purple', 'orange', 'brown']
     for i in range(cluster_num):
         color = scatter_colors[i % len(scatter_colors)]
         x1 = []
@@ -48,3 +37,13 @@ def plot_result(data, cluster_res, cluster_num):
                 y1.append(data[j, 1])
         plt.scatter(x1, y1, c=color, alpha=1, marker='+')
     plt.show()
+
+
+def plot_labels(labels: list, training_data):
+    unique_labels = set(labels)
+    colors = ['blue', 'green', 'yellow', 'red', 'purple', 'orange', 'brown']
+    for label, color in zip(unique_labels, colors):
+        if label == -1:
+            color = [0, 0, 0, 1]
+
+        class_member_mask = (labels == label)
