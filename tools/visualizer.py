@@ -1,4 +1,6 @@
 import matplotlib.pyplot as plt
+from settings import *
+import random
 
 
 def plot_cluster(result, trainingData, numOfClass):
@@ -24,7 +26,7 @@ def plot_cluster(result, trainingData, numOfClass):
     plt.show()
 
 
-def plot_result(data, cluster_res, cluster_num):
+def plot_result(data, cluster_res, cluster_num, algorithm='None'):
     nPoints = len(data)
     scatter_colors = ['blue', 'green', 'yellow', 'red', 'purple', 'orange', 'brown']
     for i in range(cluster_num):
@@ -35,7 +37,9 @@ def plot_result(data, cluster_res, cluster_num):
             if cluster_res[j] == i:
                 x1.append(data[j, 0])
                 y1.append(data[j, 1])
-        plt.scatter(x1, y1, c=color, alpha=1, marker='+')
+        plt.scatter(x1, y1, c=color, alpha=1, marker='o')
+        plt.plot(marksize=10)
+    plt.savefig(PLOT_DIR + algorithm + '-' + str(random.randint(10, 100)) + str(cluster_num) + '.png')
     plt.show()
 
 

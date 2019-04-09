@@ -6,11 +6,10 @@ import random
 from sklearn.feature_extraction.text import TfidfTransformer, TfidfVectorizer, CountVectorizer
 from sklearn.decomposition import PCA
 import time
+import numpy as np
+from sklearn.neighbors import NearestNeighbors
+from itertools import combinations
 
-
-#############
-# loading source
-#############
 
 def loading_source(file_name: str)->list:
     """
@@ -39,10 +38,11 @@ def cut_source(content_lines, sentences, drop_digit=False, drop_single_char=Fals
     stop_words_path = ''.join([settings.STATIC_DIR, 'stopwords.txt'])
     stop_words = pd.read_csv(stop_words_path, index_col=False, quoting=3, sep='\t', names=['stopword'], encoding='utf-8')
     stop_words = stop_words['stopword'].values
+    jieba.load_userdict(settings.STATIC_DIR + 'dict.txt')
     count = 0
     if write:
         now = time.strftime("%Y-%m-%d %H-%M-%S", time.localtime())
-        write_path = settings.DST_DATA + now + '-cut.txt'
+        write_path = settings.DST_DATA + now + '-cut.csv'
         w = open(write_path, 'w')
     for line in content_lines:
         count += 1
@@ -62,6 +62,7 @@ def cut_source(content_lines, sentences, drop_digit=False, drop_single_char=Fals
             # drop stop words
             segs = list(filter(lambda x: x not in stop_words, segs))
             if write:
+                w.write('%d,' % count)
                 w.write(' '.join(segs))
                 w.write('\n')
             sentences.append(' '.join(segs))
@@ -120,3 +121,32 @@ def extract_characters(sentences: list, dimension: int):
     pca = PCA(n_components=dimension)
     training_data = pca.fit_transform(weight)
     return weight, training_data
+
+
+def snn_sim_matrix(X, k=5):
+    """
+    利用sklearn包中的KDTree,计算节点的共享最近邻相似度(SNN)矩阵
+    :param X: array-like, shape = [samples_size, features_size]
+    :param k: positive integer(default = 5), 计算snn相似度的阈值k
+    :return: snn距离矩阵
+    """
+    try:
+        X = np.array(X)
+    except Exception as e:
+        print(e)
+        raise ValueError("输入的数据集必须为矩阵")
+    samples_size, features_size = X.shape  # 数据集样本的个数和特征的维数
+    nbrs = NearestNeighbors(n_neighbors=k, algorithm='kd_tree').fit(X)
+    knn_matrix = nbrs.kneighbors(X, return_distance=False)  # 记录每个样本的k个最近邻对应的索引
+    sim_matrix = 0.5 + np.zeros((samples_size, samples_size))  # snn相似度矩阵
+    for i in range(samples_size):
+        t = np.where(knn_matrix == i)[0]
+        c = list(combinations(t, 2))
+        for j in c:
+            if j[0] not in knn_matrix[j[1]]:
+                continue
+            sim_matrix[j[0]][j[1]] += 1
+    sim_matrix = 1 / sim_matrix  # 将相似度矩阵转化为距离矩阵
+    sim_matrix = np.triu(sim_matrix)
+    sim_matrix += sim_matrix.T - np.diag(sim_matrix.diagonal())
+    return sim_matrix

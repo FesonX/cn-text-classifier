@@ -24,3 +24,6 @@ CORPUS_DIR = BASE_PATH + '/corpus/'
 # Path to model
 MODEL_DIR = BASE_PATH + '/model/'
 
+# Path to plot
+PLOT_DIR = BASE_PATH + '/plot/'
+

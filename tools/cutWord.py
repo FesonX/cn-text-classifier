@@ -65,15 +65,4 @@ class WordCut(object):
             w.close()
 
 
-# stopwords_path = "stopwords.txt"
-# mydict = ["/home/zcy/haiNan/texttravelgen/textCluster/mysenicdict.txt", "/home/zcy/haiNan/texttravelgen/textCluster/myfooddict.txt"]
-# file_path = '/home/zcy/haiNan/texttravelgen/data/clean_comments.txt'
-# sentence = "黔清宫真是像大婶说的一样，一直到文昌市，一路都没看到卖椰子的。到文昌市区，已经是下午3点，我们早已饥肠辘辘，赶忙下车寻觅午餐。到了文昌当然要吃最有名的文昌鸡，而从当地人口中得知最好吃的做法就是盐焗鸡，市区里非常好找，沿路有不少的店面。" # 默认是精确模式
-
-# test = WordCut(stopwords_path)
-# test.addDictionary(mydict)
-# print test.seg_sentence(sentence)
-# test.seg_file(file_path, show=False, write=True)
-
-
 

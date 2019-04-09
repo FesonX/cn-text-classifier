@@ -7,6 +7,7 @@ import numpy as np
 import settings
 from tools.preprocess import loading_source
 import time
+import pandas as pd
 
 
 class LabelText(object):
@@ -41,8 +42,9 @@ class LabelText(object):
         """
         label+text 排序
         """
+        now = time.strftime("%Y-%m-%d %H-%M-%S", time.localtime())
         if write is True:
-            write_path = settings.DST_DATA + algorithm + str(time.time()) + '-sortedLabelText.csv'
+            write_path = settings.DST_DATA + algorithm + now + '-labelText.csv'
             print("new file saved in " + write_path)
             w = open(write_path, 'w')
         content_lines = loading_source(self.ori_path)
