@@ -1,0 +1,32 @@
+# srcData
+
+>directory: original
+Include original data sample crawled from Internet.
+
+>file: labeled_data.csv
+Ground truth labels
+
+>file: cut_data.csv, cut_data_title.csv
+Tokenization or word-token file, you can tokenize the document by calling function in directory `tools`
+
+>file: entity.csv
+Include entities generated from entity extraction tools, you can added by yourself.
+
+>file: toy_data.csv
+A mini test data.
+
+# srcData
+>文件夹: original
+包含从网络上抓取的原始数据
+
+>file: labeled_data.csv
+已标记的数据，用于计算外部信息指标
+
+>file: cut_data.csv, cut_data_title.csv
+已分词的文件，你也可以自行对数据进行分词
+
+>file: entity.csv
+包含通过实体抽取工具生成的实体，可自行添加
+
+>file: toy_data.csv
+一个迷你测试数据文件

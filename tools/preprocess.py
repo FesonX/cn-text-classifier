@@ -2,8 +2,7 @@
 import jieba
 import pandas as pd
 import settings
-import random
-from sklearn.feature_extraction.text import TfidfTransformer, TfidfVectorizer, CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer, TfidfVectorizer
 from sklearn.decomposition import PCA
 import time
 import numpy as np
@@ -127,8 +126,8 @@ def snn_sim_matrix(X, k=5):
     """
     利用sklearn包中的KDTree,计算节点的共享最近邻相似度(SNN)矩阵
     :param X: array-like, shape = [samples_size, features_size]
-    :param k: positive integer(default = 5), 计算snn相似度的阈值k
-    :return: snn距离矩阵
+    :param k: positive integer(default = 5), compute snn similarity threshold k
+    :return: snn distance matrix
     """
     try:
         X = np.array(X)

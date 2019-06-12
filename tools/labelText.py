@@ -7,7 +7,6 @@ import numpy as np
 import settings
 from tools.preprocess import loading_source
 import time
-import pandas as pd
 
 
 class LabelText(object):
