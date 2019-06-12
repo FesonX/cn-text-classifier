@@ -26,12 +26,41 @@
 聚类效果评判分为外部信息指标和内部信息指标, 外部信息指标依靠标注好的数据 `src/labeled_data.csv`, 相关知识请参阅:
 [无监督学习 - 聚类度量指标](https://www.jianshu.com/p/611ecd46bd35)
 
->实验内容
-1. K-Means 聚类实验
+>实验结果预览
 
-2. Birch 聚类实验
+**K-Means 聚类实验**
+![K-Means](https://upload-images.jianshu.io/upload_images/5530017-81f526af29d27a13.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+```shell
+------K-Means Experiment-------
+adjusted_rand_score: 0.993424
+FMI: 0.993424
+Silhouette: 0.392882
+ CHI: 610.273556
+------End------
+```
 
-3. DBSCAN 聚类实验
+**Birch 聚类实验**
+![Birch](https://upload-images.jianshu.io/upload_images/5530017-fd9b85232307e60e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+```shell
+-------Birch Experiment-------
+adjusted_rand_score: 0.978233
+FMI: 0.978233
+Silhouette: 0.392189
+ CHI: 605.710339
+------End------
+```
+
+**DBSCAN 聚类实验**
+![DBSCAN](https://upload-images.jianshu.io/upload_images/5530017-7673094ee2fb30d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+```shell
+------DBSCAN Experiment-------
+adjusted_rand_score: 0.905969
+FMI: 0.905969
+Silhouette: 0.379187
+CHI: 366.856356
+Estimated number of noise points: 102 
+------End------
+```
 
 >公众号: 程序员的碎碎念
 
