@@ -3,14 +3,16 @@
 ## Chinese Text Cluster Experiments
 
 >实验数据
+
 实验数据来源于多个新闻网站爬取的新闻, 包含教育类510篇, 游戏类231篇, 医疗类388篇, 体育类412篇.
 其中, 教育类及医疗类同时是投融资新闻中的细分类别, 用于测试细粒度的聚类能否区分.
->
->有关于新闻内容来源的获取, 请参阅这个仓库: [Finance and Investment Info Spider Collections - 投融资信息爬虫集合
+
+**有关于新闻内容来源的获取, 请参阅这个仓库:** [Finance and Investment Info Spider Collections - 投融资信息爬虫集合
 ](https://github.com/FesonX/finvest-spider)
 
 
 >实验步骤
+
 文本聚类的一般步骤是:
 1. 文本预处理
 包含分段分句, 分词及去停用词等
@@ -32,3 +34,4 @@
 3. DBSCAN 聚类实验
 
 >公众号: 程序员的碎碎念
+
